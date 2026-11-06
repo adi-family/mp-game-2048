@@ -78,6 +78,21 @@ bun test test/game-logic.test.ts
 (`addRandomTile`, `randomTileValue`), and game-over detection against both a mid-game and a
 fully-deadlocked board (`isGameOver`).
 
+A second, optional check covers what the logic tests structurally can't: whether the win/game-over
+overlay is actually invisible when it should be. `.g2048__overlay` sets `display: flex` (to centre
+its card), and an author stylesheet rule always outranks the UA's own `[hidden] { display: none }`
+at equal specificity — so a missing `.g2048__overlay[hidden]` override renders the overlay (and
+its "New game" button) permanently, over the board, regardless of the `hidden` attribute. Neither
+`bun:test`'s DOM nor happy-dom compute CSS cascade, so this needs a real browser:
+
+```sh
+bun add -d playwright && bunx playwright install chromium   # one-time, not needed to play the game
+bun test test/overlay-visibility.test.ts
+```
+
+It skips (with a warning, not a failure) if Playwright isn't installed — the dashboard itself has
+no dependency on it.
+
 ## Licence
 
 MIT.

@@ -454,6 +454,10 @@ function injectStyles() {
       background: color-mix(in srgb, var(--bg-side, #101010) 72%, transparent);
       border-radius: 10px;
     }
+    /* \`display: flex\` above has the same specificity as the UA's \`[hidden] { display: none }\`,
+       and an author rule always outranks a UA one regardless of order — so without this the
+       overlay (and its "New game" button) would render permanently, \`hidden\` or not. */
+    .g2048__overlay[hidden] { display: none; }
     .g2048__overlay-card { text-align: center; }
     .g2048__overlay-card p {
       margin: 0 0 14px; font: 600 20px var(--sans, system-ui, sans-serif); color: var(--ink, #ECEAE6);

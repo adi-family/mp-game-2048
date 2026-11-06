@@ -1,0 +1,8 @@
+{
+  "name": "game-2048",
+  "version": "1.0.1",
+  "private": true,
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}
